@@ -23,7 +23,7 @@ enum SortType {
   reset = 'reset',
 }
 
-function prepareGoods(goods: string[], sortField: string) {
+function sortGoods(goods: string[], sortField: string) {
   const preparedGoods = [...goods];
 
   switch (sortField) {
@@ -38,11 +38,11 @@ function prepareGoods(goods: string[], sortField: string) {
   }
 }
 
-export const App: React.FC<SortType> = () => {
-  const [sortField, setSortField] = useState('');
+export const App: React.FC = () => {
+  const [sortField, setSortField] = useState('reset');
   const [isReversed, setIsReversed] = useState(false);
 
-  let visibleGoods = prepareGoods(goodsFromServer, sortField);
+  let visibleGoods = sortGoods(goodsFromServer, sortField);
 
   if (isReversed) {
     visibleGoods = [...visibleGoods].reverse();
@@ -58,7 +58,7 @@ export const App: React.FC<SortType> = () => {
         <button
           type="button"
           className={cn('button is-info', {
-            'is-light': sortField !== 'alph',
+            'is-light': sortField !== SortType.alph,
           })}
           onClick={() => setSortField(SortType.alph)}
         >
@@ -68,7 +68,7 @@ export const App: React.FC<SortType> = () => {
         <button
           type="button"
           className={cn('button is-success', {
-            'is-light': sortField !== 'length',
+            'is-light': sortField !== SortType.length,
           })}
           onClick={() => setSortField(SortType.length)}
         >
@@ -93,7 +93,7 @@ export const App: React.FC<SortType> = () => {
               visibility: !isOrderUnchanged ? 'visible' : 'hidden',
             }}
             onClick={() => {
-              setSortField('');
+              setSortField(SortType.reset);
               setIsReversed(false);
             }}
           >
