@@ -32,7 +32,7 @@ function sortGoods(goods: string[], sortField: string) {
     case SortType.alph:
       return preparedGoods.sort((a, b) => a.localeCompare(b));
     case SortType.reset:
-      return goodsFromServer;
+      return [...goodsFromServer];
     default:
       return preparedGoods;
   }
